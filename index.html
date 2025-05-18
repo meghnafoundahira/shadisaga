@@ -5,6 +5,25 @@
 
 <title>❤️Wedding of Mihir&Meghna❤️</title>
 <meta name="description" content="">
+<style>
+    #musicPrompt {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #222;
+      color: white;
+      padding: 12px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      z-index: 9999;
+      transition: opacity 0.3s ease;
+    }
+    #musicPrompt:hover {
+      background-color: #333;
+    }
+  </style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link rel="shortcut icon" href="./assets/favicon.png" type="image/png">
@@ -23,29 +42,34 @@
 
 <link rel="stylesheet" href="./assets/style.css">
 </head>
-<body style="background-color:#eaeded">
+<body style="background-color:#eaeded;">
+  <audio id="introMusic" src="music.mp3"></audio>
 
-<audio id="introMusic" src="music.mp3"></audio>
+  <div id="musicPrompt">🔊 Tap to play music</div>
 
   <script>
     const audio = document.getElementById("introMusic");
+    const prompt = document.getElementById("musicPrompt");
 
-    // Attempt to autoplay on page load
+    // Try autoplay first
     window.addEventListener("load", () => {
-      audio.play().catch(() => {
-        // If autoplay is blocked, wait for user interaction
-        console.log("Autoplay blocked. Waiting for user interaction...");
+      audio.play().then(() => {
+        prompt.style.display = "none"; // Success! Hide prompt
+      }).catch(() => {
+        // Show prompt if autoplay blocked
+        prompt.style.display = "block";
+      });
+    });
 
-        // One-time user interaction to trigger playback
-        const userStart = () => {
-          audio.play();
-          document.removeEventListener("click", userStart);
-        };
-
-        document.addEventListener("click", userStart);
+    // Play music on click
+    prompt.addEventListener("click", () => {
+      audio.play().then(() => {
+        prompt.style.display = "none";
       });
     });
   </script>
+</body>
+
 
 <div class="preloader" style="display: none;">
 <div class="loader">
