@@ -23,7 +23,30 @@
 
 <link rel="stylesheet" href="./assets/style.css">
 </head>
-<body>
+<body style="background-color:#eaeded">
+
+<audio id="introMusic" src="music.mp3"></audio>
+
+  <script>
+    const audio = document.getElementById("introMusic");
+
+    // Attempt to autoplay on page load
+    window.addEventListener("load", () => {
+      audio.play().catch(() => {
+        // If autoplay is blocked, wait for user interaction
+        console.log("Autoplay blocked. Waiting for user interaction...");
+
+        // One-time user interaction to trigger playback
+        const userStart = () => {
+          audio.play();
+          document.removeEventListener("click", userStart);
+        };
+
+        document.addEventListener("click", userStart);
+      });
+    });
+  </script>
+
 <div class="preloader" style="display: none;">
 <div class="loader">
 <div class="ytp-spinner">
